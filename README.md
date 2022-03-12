@@ -1,8 +1,8 @@
 ## Persist and analyze metadata in a transient Amazon MWAA environment
 
-This repository contains sample code for persist and analyze metadata in a transient Amazon MWAA environment
+This repository contains sample code for persisting and analyzing metadata in a transient Amazon MWAA environment
 
-This blog post shows how to export, persist and analyse Airflow metadata in Amazon S3 enabling you to run and perform pipeline monitoring and analysis. In doing so, you can spin down Airflow instances without losing operational metadata.
+The related blog post shows how to export, persist and analyse Airflow metadata in Amazon S3 enabling you to run and perform pipeline monitoring and analysis. In doing so, you can spin down Airflow instances without losing operational metadata.
 
 As part of the included blog tutorial, you will be able to perform below high-level tasks:
   1) Run CloudFormation stack to create all necessary resources
