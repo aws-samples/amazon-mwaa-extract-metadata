@@ -1,4 +1,4 @@
-## My Project
+## Persist and analyze metadata in a transient Amazon MWAA environment
 
 This repository contains sample code for persist and analyze metadata in a transient Amazon MWAA environment
 
