@@ -14,20 +14,20 @@ The below diagram illustrates the solution architecture. Please note, Amazon Qui
 ## Prerequisites
 
 To implement the solution, you will need following :
-•	An [AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
-•	Basic understanding of [Apache Airflow](https://airflow.apache.org/), [Amazon Athena](https://aws.amazon.com/athena/?whats-new-cards.sort-by=item.additionalFields.postDateTime&whats-new-cards.sort-order=desc), [Amazon Simple Storage Service](https://aws.amazon.com/s3/) (Amazon S3) , [AWS Glue](https://aws.amazon.com/glue/), [Amazon Managed Workflows for Apache Airflow](https://aws.amazon.com/managed-workflows-for-apache-airflow/) (MWAA) and [AWS Cloud Formation](https://aws.amazon.com/cloudformation/)
+- An [AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
+- Basic understanding of [Apache Airflow](https://airflow.apache.org/), [Amazon Athena](https://aws.amazon.com/athena/?whats-new-cards.sort-by=item.additionalFields.postDateTime&whats-new-cards.sort-order=desc), [Amazon Simple Storage Service](https://aws.amazon.com/s3/) (Amazon S3), [AWS Glue](https://aws.amazon.com/glue/), [Amazon Managed Workflows for Apache Airflow](https://aws.amazon.com/managed-workflows-for-apache-airflow/) (MWAA) and [AWS Cloud Formation](https://aws.amazon.com/cloudformation/)
 
 ## Deploy Infrastructure
 
 The provisioning takes about 30 minutes to complete. 
 
 The CloudFormation template generates the following resources:
-o	VPC infrastructure that uses [public routing over the Internet](https://docs.aws.amazon.com/mwaa/latest/userguide/networking-about.html#networking-about-overview-public).
-o	Amazon S3 buckets required to support Amazon MWAA
-o	Amazon MWAA environment
-o	AWS Glue jobs for data processing and help generate airflow metadata
-o	[AWS Lambda-backed custom resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources-lambda.html) to upload to Amazon S3 the sample data, AWS Glue scripts and DAG configuration files
-o	[AWS Identity and Access Management](https://aws.amazon.com/iam/) (IAM) users, roles, and policies
+- VPC infrastructure that uses [public routing over the Internet](https://docs.aws.amazon.com/mwaa/latest/userguide/networking-about.html#networking-about-overview-public).
+- Amazon S3 buckets required to support Amazon MWAA
+- Amazon MWAA environment
+- AWS Glue jobs for data processing and help generate airflow metadata
+- [AWS Lambda-backed custom resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources-lambda.html) to upload to Amazon S3 the sample data, AWS Glue scripts and DAG configuration files
+- [AWS Identity and Access Management](https://aws.amazon.com/iam/) (IAM) users, roles, and policies
 
 
 ## What this repo contains
