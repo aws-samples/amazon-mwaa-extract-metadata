@@ -5,12 +5,12 @@ Parameters:
   SourceBucket:
     Type: String
     Description: The bucket name that includes the source data and scripts
-    Default: blog-glue-etl-airflow
+    Default: aws-blogs-artifacts-public
 
   SourceBucketPrefix:
     Type: String
     Description: The source bucket prefix
-    Default: artefacts
+    Default: artifacts/BDB-1261/
 
   EnvironmentName:
     Description: An environment name that is prefixed to resource names
@@ -504,29 +504,40 @@ Resources:
 
               try:
 
-                #Loop through and read all files in source_bucket under the source_bucket_prefix path
-                for obj in source_bucket.objects.filter(Prefix=source_bucket_prefix):
+                #Exclude ALL Delete requests 
+                if(event['RequestType'] != 'Delete'):
 
+                  #Files to be copied in airflow environment bucket
+
+                  airflow_bucket_files = [
+                    'dags/run-glue-jobs.py',
+                    'dags/run-simple-dag.py',
+                    'dags/extract_metadata.py'
+                    ]
+                                    
+                  for file in airflow_bucket_files:
+                    source_bucket_key = source_bucket_prefix + file
+                    obj = s3.Object(source_bucket_name, source_bucket_key)
                     content = obj.get()['Body'].read().decode('UTF-8') 
-
-                    #Exclude operations on top-level prefix (i.e operate on only objects) and exclude ALL Delete requests 
-                    if(obj.key != source_bucket_prefix+'/' and event['RequestType'] != 'Delete'):
+                    content = content.replace('<airflow-extract-metadata-account-id>',data_bucket_name)
+                    s3.Object(airflow_bucket_name, file).put(Body=content) 
                     
-                      #If file is in /dags folder in the source bucket, replace placeholder value with data_bucket_name
-                      #Create a new file (with replaced text) in the airflow_bucket S3 bucket
-                      if(obj.key.startswith(source_bucket_prefix+'/dags')): 
-                        content = content.replace('<airflow-extract-metadata-account-id>',data_bucket_name)
-                        s3.Object(airflow_bucket_name, obj.key[len(source_bucket_prefix)+1:]).put(Body=content)   
-                      
-                      #Else If file is in /glue folder in the source bucket, replace placeholder value with data_bucket_name
-                      #Create a new file (with replaced text) in the data_bucket S3 bucket
-                      elif(obj.key.startswith(source_bucket_prefix+'/glue')):
-                        content = content.replace('<airflow-extract-metadata-account-id>',data_bucket_name)
-                        s3.Object(data_bucket_name, obj.key[len(source_bucket_prefix)+1:]).put(Body=content) 
-                      
-                      #Else create a new file with same text (no replaced text) in the data_bucket S3 bucket
-                      else:
-                        s3.Object(data_bucket_name, obj.key[len(source_bucket_prefix)+1:]).put(Body=content) 
+
+                  #Files to be copied in data environment bucket
+                  data_bucket_files = [
+                    'glue-csv-to-parquet.py',
+                    'glue-transform.py',
+                    'raw/customer_activity.csv'
+                    ]
+    
+                  for file in data_bucket_files:
+                    source_bucket_key = source_bucket_prefix + file
+                    obj = s3.Object(source_bucket_name, source_bucket_key)
+                    content = obj.get()['Body'].read().decode('UTF-8') 
+                    content = content.replace('<airflow-extract-metadata-account-id>',data_bucket_name)
+                    s3.Object(data_bucket_name, file).put(Body=content) 
+
+
 
                 cfnresponse.send(event,
                                  context,
