@@ -2,7 +2,7 @@
 
 This repository contains sample code for persisting and analyzing metadata in a transient Amazon MWAA environment. Storing this metadata in your data lake enables you to better perform pipeline monitoring and analysis. Tearing down instances whilst preserving the metadata enables you to further optimize the costs of Amazon MWAA.
 
-This [blog](https://github.com/aws-samples/amazon-mwaa-extract-metadata) provides a detailed overview and step-by-step instructions on how to export, persist, and analyze Airflow metadata. 
+This [blog](https://aws.amazon.com/blogs/big-data/persist-and-analyze-metadata-in-a-transient-amazon-mwaa-environment/) provides a detailed overview and step-by-step instructions on how to export, persist, and analyze Airflow metadata. 
 
 ## Solution Overview
 
